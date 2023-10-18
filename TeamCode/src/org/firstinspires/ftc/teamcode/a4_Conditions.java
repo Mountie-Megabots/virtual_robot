@@ -95,7 +95,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  *    "X Greater than Y" when the X axis is greater than the Y axis
  *    "Y axis equal to X axis" when they are the same.
  * 4. Use ane if-else block to write "Trigger is pressed" when
- *    gamepad2.right_trigger > .25 and "Trigger not pressed" otherwise.
+ *    gamepad1.right_trigger > .25 and "Trigger not pressed" otherwise.
  * 5. The A buttons counter from the last program has already been copied
  *    to this program. Use an if-else if-else block to write the following to
  *    telemetry:

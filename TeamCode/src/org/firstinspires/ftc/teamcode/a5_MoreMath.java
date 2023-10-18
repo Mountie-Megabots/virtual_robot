@@ -31,6 +31,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  *
  * Exercises:
  * 1. This program contains the same AButtonCounter from the last two lessons.
+ *    Write aButtonCount to telemetry.
  *    Change line "aButtonCount = aButtonCount+1" to use the ++ operator and
  *    make sure it still functions the same.
  * 2. Using the same line, modify it to use the += operator.
