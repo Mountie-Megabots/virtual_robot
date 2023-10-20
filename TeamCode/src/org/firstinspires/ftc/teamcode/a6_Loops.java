@@ -4,7 +4,36 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 /**
- * Lesson coming. Read section 4.4 and 4.5 of LearnJavaForFtc if working ahead.
+ * Loops let us run a block of code a certain number of times or until a certain
+ * condition is met.
+ *
+ * A while loop contains a condition similar to an if statement and will run the
+ * code inside it until as long as that condition is met. Most of our OpModes
+ * contain a while loop with the condition opModeIsActive() which loops through
+ * our code until the Stop button is pressed on the Driver Hub.
+ *
+ * A while loop is defined like this:
+ *
+ * while(condition){
+ *     //code goes here
+ * }
+ *
+ * In most cases, we want the condition to become false at some point, otherwise the
+ * code will continue to run indefinitely.
+ *
+ * A for loop works similarly, but typically runs its code a set number of times.
+ * Instead of just having a condition, a for loop definition looks like this:
+ *
+ * //for(start; condition; update)
+ * for(int i = 0; i < 5; i++){
+ *     //This code will run five times.
+ * }
+ *
+ * The start section is usually used to declare or set an integer variable that
+ * is used to track the iterations of the loop. The condition is a boolean
+ * that determines when the loop runs, and the update is typically used to
+ * increment the integer variable so the condition will eventually be false.
+ *
  *
  * Exercises:
  * 1. Create a while loop with the condition !gamepad.a . Inside the loop write
@@ -38,7 +67,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  *    Fizz
  *    10
  *  
- *
+ *  Read section 4.4 and 4.5 of LearnJavaForFtc for more information.
  */
 @TeleOp(name = "Lesson 6: Loops")
 public class a6_Loops extends LinearOpMode {
