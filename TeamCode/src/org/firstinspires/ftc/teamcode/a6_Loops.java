@@ -36,7 +36,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  *
  *
  * Exercises:
- * 1. Create a while loop with the condition !gamepad.a . Inside the loop write
+ * 1. Create a while loop with the condition !gamepad1.a . Inside the loop write
  *    "Push the A button to Continue" (makes sure there is a telemetry.update()
  *    in the loop).
  * 2. Do the same thing, but for the B button.
