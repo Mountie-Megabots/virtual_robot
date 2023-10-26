@@ -5,17 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
- * This to cover in this lesson:
- * - using built in getRuntime method to get the time since the program started
- * - using variables to store a time and use that as an offset for getRuntime
- * - using the ElapsedTime class as a resettable timer that can be used to time
- * specific events
- * - using System.currentTimeMillis() to get the current time in milliseconds
- * - using System.nanoTime() to get the current time in nanoseconds
- * - using sleep to pause the program for a certain amount of time
- * - using a while loop to wait for a certain amount of time
- *
- *
+ * Exercises:
  * 1. It can be useful to keep track of time in your program. We can use it to
  *    time how long a certain action takes, to write a simple autonomous routine,
  *    or use it to wait for a certain amount of time.
@@ -89,7 +79,7 @@ public class a9_Time extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-            
+
             telemetry.update();
         }
     }
