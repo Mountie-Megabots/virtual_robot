@@ -50,19 +50,32 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class a1_Variables extends LinearOpMode {
     //Declare variables here
     //#3 goes here
-    String name = "Put your name here";
+    String name = "Max";
     double speed = 1;
     int count = 0;
     boolean teamPropDetected = false;
 
+    double test = 5.5;
+
     public void runOpMode() throws InterruptedException {
         //Code that runs when we hit init.
-        //#1 goes here
+        telemetry.addLine("My name is "+name);
+        telemetry.update();
 
         waitForStart();
 
         while(opModeIsActive()){
-            //#2 goes here
+            telemetry.addData("speed",speed);
+            telemetry.addData("count",count);
+            telemetry.addData("teamPropDetected",teamPropDetected);
+            telemetry.addData("test",test);
+            if(gamepad1.a){
+               teamPropDetected = true;
+        }
+        else{
+            teamPropDetected = false;
+        }
+            telemetry.update();
         }
 
     }
