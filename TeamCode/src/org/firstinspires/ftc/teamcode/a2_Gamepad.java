@@ -47,7 +47,8 @@ public class a2_Gamepad extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         //Declare variables here
         //#2 goes here
-        double leftX;
+        double leftX = gamepad1.left_stick_x;
+        double leftY = gamepad1.left_stick_x;
         boolean abutton = false;
         boolean toggleValue = false;
 
@@ -56,6 +57,10 @@ public class a2_Gamepad extends LinearOpMode {
         while(opModeIsActive()){
             //#1 goes here
             telemetry.addData("Left-Y", gamepad1.left_stick_y);
+            telemetry.addData("Left-X",gamepad1.left_stick_x);
+            telemetry.addData("leftX",leftX);
+            telemetry.addData("leftY",leftY);
+            telemetry.update();
 
 
         }
