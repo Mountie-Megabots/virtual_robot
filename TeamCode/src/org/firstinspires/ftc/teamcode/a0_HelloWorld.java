@@ -38,9 +38,9 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  *     the text should stay around until we manually clear it.
  *  5. Let's try clearing telemetry now. Add this bit of code to the while loop:
  *            if(gamepad1.a){
- *                 telemetry.clear();
- *                 telemetry.update();
- *             }
+ *  *                 telemetry.clear();
+ *  *                 telemetry.update();
+ *  *             }
  *
  *      When you press the A button (while the program is running) it should clear all text.
  */
@@ -49,21 +49,39 @@ public class a0_HelloWorld extends LinearOpMode {
 
     public void runOpMode() throws InterruptedException {
         //Add your telemetry for #1, #2, & #4 here.
+        waitForStart();
+        telemetry.setAutoClear(false);
+        telemetry.addLine("The program is now running");
+        telemetry.update();
 
+        telemetry.addLine("Hello World!");
+        telemetry.addLine("My name is Max");
+        telemetry.update();
+        if(gamepad1.a){
+            telemetry.clear();
+            telemetry.update();
+        }
 
 
 
         // This line stops the program here until you hit the start button.
-        waitForStart();
+
+
         //#3 goes here
+
+
         //This is where our code runs after you hit the Start button.
 
 
 
         while(opModeIsActive()){
-            //This is our main loop.
-            //#5 goes here.
+            if(gamepad1.a){
+                telemetry.clear();
+                telemetry.update();
+            }
 
         }
+
+
     }
 }
