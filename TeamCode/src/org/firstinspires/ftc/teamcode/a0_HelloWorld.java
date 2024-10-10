@@ -29,7 +29,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  *     Make sure you add a line below it to call telemetry.update()
  *  2. Use another telemetry.addLine to make the full text:
  *      Hello World!
- *      My name is [your name here].
+ *      My name is Golden Willaert.
  *  3. Add another telemetry call after waitForStart() so it will print
  *     "The program is running now" after we hit Start. Make sure to call
  *     telemetry.update() again.
@@ -49,12 +49,15 @@ public class a0_HelloWorld extends LinearOpMode {
 
     public void runOpMode() throws InterruptedException {
         //Add your telemetry for #1, #2, & #4 here.
-
-
-
+        telemetry.setAutoClear(false);
+telemetry.addLine("hello world");
+telemetry.addLine("My name is Golden Willaert");
+telemetry.update();
 
         // This line stops the program here until you hit the start button.
         waitForStart();
+        telemetry.addLine("The program is running now");
+        telemetry.update();
         //#3 goes here
         //This is where our code runs after you hit the Start button.
 
@@ -63,7 +66,10 @@ public class a0_HelloWorld extends LinearOpMode {
         while(opModeIsActive()){
             //This is our main loop.
             //#5 goes here.
-
+            if(gamepad1.a) {
+                telemetry.clear();
+                telemetry.update();
+            }
         }
     }
 }
