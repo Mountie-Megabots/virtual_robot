@@ -122,10 +122,21 @@ public class a4_Conditions extends LinearOpMode {
             if(aButtonPressed()) {
                 aButtonCount++;
             }
-
-            //All of your code goes below here
-
-
+      if(gamepad1.a){
+          telemetry.addLine("A button is pressed.");
+      }
+      if(gamepad1.x || gamepad1.y) {
+          telemetry.addLine("The X or Y button is pressed.");
+      }
+        if(-gamepad1.left_stick_y > gamepad1.left_stick_x){
+      telemetry.addLine("The Y is greater than X");
+  }
+  else if(gamepad1.left_stick_y < gamepad1.left_stick_x){
+      telemetry.addLine("The X is greater than Y");
+  }
+  else{
+      telemetry.addLine("The X and Y is equal");
+  }
 
 
             telemetry.update();

@@ -36,7 +36,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  *  5. Add this section of code to the beginning of the while loop and then
  *     add toggleValue to telemetry.
  *      if(abutton && !gamepad1.a){
- *             toggleValue = !toggleValue;
+ *  *             toggleValue = !toggleValue;
  *      }
  *      This value should switch between true and false you press the a button.
  *
@@ -47,8 +47,8 @@ public class a2_Gamepad extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         //Declare variables here
         //#2 goes here
-        double leftX = gamepad1.left_stick_x;
-        double leftY = gamepad1.left_stick_x;
+        double leftX = 0;
+        double leftY = 0;
         boolean abutton = false;
         boolean toggleValue = false;
 
@@ -56,10 +56,17 @@ public class a2_Gamepad extends LinearOpMode {
 
         while(opModeIsActive()){
             //#1 goes here
-            telemetry.addData("Left-Y", gamepad1.left_stick_y);
-            telemetry.addData("Left-X",gamepad1.left_stick_x);
-            telemetry.addData("leftX",leftX);
-            telemetry.addData("leftY",leftY);
+            if(abutton && !gamepad1.a) {
+                toggleValue = !toggleValue;
+       }
+
+            leftX = gamepad1.left_stick_x;
+            leftY = gamepad1.left_stick_y;
+            abutton = gamepad1.a;
+            telemetry.addData("LeftX",leftX);
+            telemetry.addData("LeftY",leftY);
+            telemetry.addData("AButton",abutton);
+            telemetry.addData("ToggleValue",toggleValue);
             telemetry.update();
 
 
