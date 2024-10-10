@@ -49,12 +49,19 @@ public class a0_HelloWorld extends LinearOpMode {
 
     public void runOpMode() throws InterruptedException {
         //Add your telemetry for #1, #2, & #4 here.
+        telemetry.setAutoClear(false);
+        telemetry.addLine("hello world!");
+        telemetry.addLine("hello, my name is gibson");
+        telemetry.update();
+
 
 
 
 
         // This line stops the program here until you hit the start button.
         waitForStart();
+        telemetry.addLine("The teleop is now started!");
+        telemetry.update();
         //#3 goes here
         //This is where our code runs after you hit the Start button.
 
@@ -62,6 +69,10 @@ public class a0_HelloWorld extends LinearOpMode {
 
         while(opModeIsActive()){
             //This is our main loop.
+            if(gamepad1.a){
+                telemetry.clear();
+                telemetry.update();
+            }
             //#5 goes here.
 
         }

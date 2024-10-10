@@ -44,6 +44,8 @@ public class a3_BasicMath extends LinearOpMode {
     //Variables go here
     //#1 goes here.
     boolean abutton = false;
+    int abuttoncount = 0;
+    double rightstickY = 0;
 
 
     public void runOpMode() throws InterruptedException {
@@ -52,14 +54,16 @@ public class a3_BasicMath extends LinearOpMode {
 
         while(opModeIsActive()){
             //Variable assignment goes here
-
-
+            rightstickY = -gamepad1.right_stick_y / 2;
+            rightstickY = -gamepad1.right_stick_y * 2;
             if(aButtonPressed()){
                 //#5 goes here
+                abuttoncount = abuttoncount+1;
             }
 
             //Telemetry goes here
-
+            telemetry.addData("abutton count",abuttoncount);
+            telemetry.addData("rightstick-y",rightstickY);
             telemetry.update();
 
         }
