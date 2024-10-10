@@ -48,22 +48,33 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class a0_HelloWorld extends LinearOpMode {
 
     public void runOpMode() throws InterruptedException {
-        //Add your telemetry for #1, #2, & #4 here.
+        telemetry.addLine("Hello world");
+        telemetry.addLine( "Hello world!");
+        telemetry.addLine( "My name is Pinqui Kuolr.");
+        telemetry.update();
 
 
 
 
         // This line stops the program here until you hit the start button.
         waitForStart();
-        //#3 goes here
-        //This is where our code runs after you hit the Start button.
+        telemetry.addLine( "Hello you");
+        telemetry.update();
+        telemetry.setAutoClear(false);
 
 
 
-        while(opModeIsActive()){
+        while(opModeIsActive()) {
             //This is our main loop.
-            //#5 goes here.
-
+            if (gamepad1.a) {
+                telemetry.clear();
+                telemetry.update();
+            }
+            else if (gamepad1.b){
+                telemetry.addLine("You pressed b");
+                telemetry.update();
+            }
         }
+
     }
 }
