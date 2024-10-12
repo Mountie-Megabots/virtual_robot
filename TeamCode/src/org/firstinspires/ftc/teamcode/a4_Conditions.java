@@ -65,7 +65,14 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  * else if(gamepad1.left_stick_y < 0){
  *     telemetry.addLine("Left stick is negative");
  * }
- * else{
+ * else{   cccc
+ *
+ *
+ *
+ *
+ *
+ *
+ *    21234
  *     telemetry.addLine("Left Stick is zero");
  * }
  *
@@ -137,9 +144,9 @@ public class a4_Conditions extends LinearOpMode {
                 telemetry.addLine("Y button is pressed");
             }
 
-            if(gamepad1.right_stick_x < -gamepad1.right_stick_y){
+            if(gamepad1.right_stick_x < gamepad1.right_stick_y){
                 telemetry.addLine("X is greater than Y");
-            }else if(gamepad1.right_stick_x > -gamepad1.right_stick_y){
+            }else if(gamepad1.right_stick_x > gamepad1.right_stick_y){
                 telemetry.addLine("Y is greater than X");
             }
             //All of your code goes below here
