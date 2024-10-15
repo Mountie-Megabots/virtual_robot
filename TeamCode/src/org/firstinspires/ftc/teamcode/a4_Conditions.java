@@ -65,14 +65,14 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  * else if(gamepad1.left_stick_y < 0){
  *     telemetry.addLine("Left stick is negative");
  * }
- * else{   cccc
+ * else{
  *
  *
  *
  *
  *
  *
- *    21234
+ *
  *     telemetry.addLine("Left Stick is zero");
  * }
  *
@@ -112,7 +112,9 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  *      "You've pressed the button a few times" when 2< aButtonCount < 5
  *      "You've pressed the button several times" when aButtonCount >= 5
  *      "You can stop pressing the button now" when aButtonCount > 20
- *  6. *Optional* You can do a modified version of 5 where the program
+ *
+ *
+ *  6. XXXXXXXX NOOOOOOO*Optional* You can do a modified version of 5 where the program
  *      tries to convince the user to stop pressing the A button, with
  *      increasing frantic dialogs the more the user presses it.
  *
@@ -125,11 +127,16 @@ public class a4_Conditions extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         waitForStart();
 
+        double rightx;
+        double righty;
+
         while(opModeIsActive()){
             if(aButtonPressed()) {
                 aButtonCount++;
             }
 
+            rightx = gamepad1.right_stick_x;
+            righty = gamepad1.right_stick_y;
 
             if(gamepad1.a){
                 telemetry.addLine("A button is pressed");
@@ -143,11 +150,30 @@ public class a4_Conditions extends LinearOpMode {
             if(gamepad1.y){
                 telemetry.addLine("Y button is pressed");
             }
-
-            if(gamepad1.right_stick_x < gamepad1.right_stick_y){
+            if(gamepad1.right_stick_x > gamepad1.right_stick_y){
                 telemetry.addLine("X is greater than Y");
-            }else if(gamepad1.right_stick_x > gamepad1.right_stick_y){
+            }else if(gamepad1.right_stick_x < gamepad1.right_stick_y) {
                 telemetry.addLine("Y is greater than X");
+            }else{
+                telemetry.addLine("X is equal to Y");
+            }
+
+            if(gamepad1.left_trigger > .25){
+                telemetry.addLine("left trigger pressed");
+            }else{
+                telemetry.addLine("left trigger NOT pressed");
+            }
+
+            if(aButtonCount == 0){
+                telemetry.addLine("you have not pressed the a button");
+            }else if(aButtonCount == 1){
+                telemetry.addLine("you have pressed the button once");
+            }else if(aButtonCount >= 20) {
+                telemetry.addLine("you can stop pressing the button now.");
+            }else if(aButtonCount >= 5) {
+                telemetry.addLine("you have pressed the button several times");
+            }else if(5>= aButtonCount) {
+                telemetry.addLine("you have pressed the button a couple times");
             }
             //All of your code goes below here
 
