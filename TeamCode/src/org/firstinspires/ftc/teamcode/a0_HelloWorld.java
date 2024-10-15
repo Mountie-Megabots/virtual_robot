@@ -48,13 +48,13 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class a0_HelloWorld extends LinearOpMode {
 
     public void runOpMode() throws InterruptedException {
-        //Add your telemetry for #1, #2, & #4 here.
+        //add your telemetry for #1, #2, & #4 here.
+    telemetry.addData("Key","Hello World! My name is Riley");
+    telemetry.update();
 
-
-
-
-        // This line stops the program here until you hit the start button.
-        waitForStart();
+        // this line stops the program here until you hit the start button.
+        waitForStart();telemetry.addData("key","The program is working now);
+                telemetry.update();
         //#3 goes here
         //This is where our code runs after you hit the Start button.
 
