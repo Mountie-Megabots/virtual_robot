@@ -58,7 +58,7 @@ public class a5_MoreMath extends LinearOpMode {
 
         while(opModeIsActive()){
             if(aButtonPressed()) {
-                aButtonCount = aButtonCount+1;
+                aButtonCount += aButtonCount;
             }
 
             //You code goes here
