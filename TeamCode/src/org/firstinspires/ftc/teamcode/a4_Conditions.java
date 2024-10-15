@@ -119,6 +119,29 @@ public class a4_Conditions extends LinearOpMode {
         waitForStart();
 
         while(opModeIsActive()){
+
+            if (aButtonCount == 0) {
+                telemetry.addLine("You haven't pressed the button");
+            } else if (aButtonCount == 1) {
+                telemetry.addLine("You have pressed the button once");
+            } else if (aButtonCount == 2) {
+                telemetry.addLine("You have pressed the button a couple times");
+            } else if (2 < aButtonCount && aButtonCount <5) {
+                telemetry.addLine("You have pressed the button a few times");
+            } else if (5 <= aButtonCount && aButtonCount <= 20) {
+                telemetry.addLine("You have pressed the button several times");
+            } else if (aButtonCount > 20) {
+                telemetry.addLine("You can stop pressing the button now");
+            }
+
+            if(gamepad1.right_trigger > 0.25){
+                telemetry.addLine("The trigger is pressed");
+            } else{
+                telemetry.addLine("The trigger is not pressed");
+            }
+
+            telemetry.addData("Right-Y",-gamepad1.right_stick_y);
+            telemetry.addData("Right-X",gamepad1.right_stick_x);
             if(aButtonPressed()) {
                 aButtonCount++;
             }
@@ -128,10 +151,10 @@ public class a4_Conditions extends LinearOpMode {
       if(gamepad1.x || gamepad1.y) {
           telemetry.addLine("The X or Y button is pressed.");
       }
-        if(-gamepad1.left_stick_y > gamepad1.left_stick_x){
+        if(-gamepad1.right_stick_y > gamepad1.right_stick_x){
       telemetry.addLine("The Y is greater than X");
   }
-  else if(gamepad1.left_stick_y < gamepad1.left_stick_x){
+  else if(-gamepad1.right_stick_y < gamepad1.right_stick_x){
       telemetry.addLine("The X is greater than Y");
   }
   else{
