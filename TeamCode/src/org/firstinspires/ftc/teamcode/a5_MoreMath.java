@@ -53,24 +53,28 @@ public class a5_MoreMath extends LinearOpMode {
     boolean abutton = false;
     int aButtonCount = 0;
 
+
     public void runOpMode() throws InterruptedException {
         waitForStart();
 
-        while(opModeIsActive()){
-            if(aButtonPressed()) {
-                aButtonCount = aButtonCount+1;
+        while (opModeIsActive()) {
+            if (aButtonPressed()) {
+                aButtonCount += 5;
             }
-
             //You code goes here
-
+            double AbsRSX = Math.abs(gamepad1.right_stick_y);
+            if (AbsRSX > 0.1) {
+                telemetry.addLine("sigma town!!");
+            }
+            telemetry.addData("aButtonCount", aButtonCount);
             telemetry.update();
         }
     }
 
-    boolean aButtonPressed(){
+    boolean aButtonPressed() {
         boolean returnValue = false;
 
-        if(!abutton && gamepad1.a){
+        if (!abutton && gamepad1.a) {
             returnValue = true;
         }
         abutton = gamepad1.a;
