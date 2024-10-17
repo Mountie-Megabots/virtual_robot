@@ -37,7 +37,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  *     telemetry.setAutoClear(false) before any of your telemetry lines. Now
  *     the text should stay around until we manually clear it.
  *  5. Let's try clearing telemetry now. Add this bit of code to the while loop:
- *            if(gamepad1.a){
+ *            if(game
+ *            pad1.a){
  *                 telemetry.clear();
  *                 telemetry.update();
  *             }
