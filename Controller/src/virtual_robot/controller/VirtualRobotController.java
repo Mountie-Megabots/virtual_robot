@@ -409,6 +409,7 @@ public class VirtualRobotController {
 
                 if (group1 == null) return -1;
                 else if (group2 == null) return 1;
+                else if (group1.equals(group2)) return getNameFromAnnotationOrOpmode(o1).compareToIgnoreCase(getNameFromAnnotationOrOpmode(o2));
                 else return group1.compareToIgnoreCase(group2);
             }
         });
