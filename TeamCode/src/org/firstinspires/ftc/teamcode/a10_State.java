@@ -118,7 +118,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  *    variable.
  *
  */
-@TeleOp(name="Lesson 10: State")
+@TeleOp(name="Lesson_10: State")
 public class a10_State extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         DcMotor motor = hardwareMap.get(DcMotor.class, "motor");
