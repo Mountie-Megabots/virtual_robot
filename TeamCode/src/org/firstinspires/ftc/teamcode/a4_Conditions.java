@@ -138,11 +138,28 @@ public class a4_Conditions extends LinearOpMode {
                 }
             }
 
+            if (gamepad1.right_stick_x > gamepad1.right_stick_y){
+                telemetry.addLine("X is greater than Y");
+            }
+            else if (gamepad1.right_stick_x < gamepad1.right_stick_y) {
+                telemetry.addLine("Y is greater than X");
+            }
+            else {
+                telemetry.addLine("X is equal to Y");
+            }
+            if (gamepad1.right_trigger > .25){
+                telemetry.addLine("Trigger has been pressed");
+            }
+            else {
+                telemetry.addLine("Trigger has not been pressed.");
+            }
 
+            if (aButtonCount == 0) {
+                telemetry.addLine("You haven't pressed the A button at.");
+            }
+            else if (aButtonCount == )
 
-
-
-            telemetry.update();
+            }
         }
     }
 
