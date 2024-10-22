@@ -53,6 +53,7 @@ public class a1_Variables extends LinearOpMode {
     String name = "Riley";
     double speed = 1;
     int count = 0;
+    double test = 5.999999999;
     boolean teamPropDetected = false;
 
     public void runOpMode() throws InterruptedException {
@@ -65,8 +66,22 @@ public class a1_Variables extends LinearOpMode {
 
         while(opModeIsActive()) {
             //#2 goes here
+
+            if(gamepad1.a){
+                teamPropDetected = true;
+            }
+            else{
+                teamPropDetected = false;
+            }
+
+
             telemetry.addData("Speed", speed);
-            telemetry.addData()
+            telemetry.addData("count", count);
+            telemetry.addData("tem prop", teamPropDetected);
+            telemetry.addData("test", test);
+            telemetry.update();
+
+
         }
 
 
