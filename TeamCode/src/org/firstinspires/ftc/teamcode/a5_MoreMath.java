@@ -52,17 +52,37 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class a5_MoreMath extends LinearOpMode {
     boolean abutton = false;
     int aButtonCount = 0;
-
+    double E;
+    double randy = Math.random() * 10;
     public void runOpMode() throws InterruptedException {
         waitForStart();
 
         while(opModeIsActive()){
             if(aButtonPressed()) {
-                aButtonCount += aButtonCount;
+                aButtonCount += (int) randy;
             }
+
+            telemetry.addData("abutton count",aButtonCount);
+
+            if(Math.abs(gamepad1.right_stick_y) > 0.1){
+
+                telemetry.addLine("right stick Y");
+
+            }
+
+            E = Math.copySign(gamepad1.left_stick_x, .5);
+
+            telemetry.addData("number",E);
 
             //You code goes here
 
+            if (gamepad1.left_trigger == gamepad1.right_trigger){
+                telemetry.addLine("Both are the same");
+            } else if(Math.max(gamepad1.left_trigger, gamepad1.right_trigger) == gamepad1.right_trigger){
+                telemetry.addLine("right trigger is greater");
+            } else if(Math.max(gamepad1.left_trigger, gamepad1.right_trigger) == gamepad1.left_trigger) {
+                telemetry.addLine("left trigger is greater");
+            }
             telemetry.update();
         }
     }

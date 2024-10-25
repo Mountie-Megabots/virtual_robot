@@ -71,20 +71,49 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  */
 @TeleOp(name = "Lesson 6: Loops")
 public class a6_Loops extends LinearOpMode {
-
+    int hanmeboogie = 0;
+    int i = 0;
     public void runOpMode() throws InterruptedException {
         //#1 Goes here
-
+        while(!gamepad1.a){
+            telemetry.addLine("Press A Button to continue...");
+            telemetry.update();
+        }
         //#2 Goes here
+        while(!gamepad1.b){
+            telemetry.addLine("Press B Button to continue...");
+            telemetry.update();
+        }
 
-
+        hanmeboogie = 0;
         //#3 goes here
-
+        while(hanmeboogie <= 10){
+            telemetry.addData("jabba said hanmeboogie this many times",hanmeboogie);
+            telemetry.update();
+            hanmeboogie++;
+            sleep(1000);
+        }
 
         //#4 goes here
-
+        for(hanmeboogie = 0; hanmeboogie <= 10; hanmeboogie++){
+            telemetry.addData("hanmeboogie!",hanmeboogie);
+            telemetry.update();
+            sleep(1000);
+        }
 
         //#5 goes here
+        for(i = 0; i < 50; i++){
+            if(i % 3 == 0){
+                telemetry.addLine("FIZZ!");
+            } else if (i % 5 == 0) {
+                telemetry.addLine("BUZZ!");
+            } else{
+                telemetry.addData("",i);
+            }
+            telemetry.update();
+            sleep(1000);
+        }
+
 
         waitForStart();
 

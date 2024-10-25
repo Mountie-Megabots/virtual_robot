@@ -17,6 +17,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  *    The function you added in the last step printed the class variable.
  *    Go to the #2 comment and add variableScopeTest to telemetry with the
  *    caption "Method Variable"
+ *    \/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\;/\/\/\/\/\/\/\/
+ *    do me next!
  * 3. That telemetry call prints the version of variableScopeTest defined in
  *    runOpMode method because they share the same scope.
  *    To use the class version of that variable, we can use the keyword 'this'
@@ -45,16 +47,17 @@ public class a7_Methods extends LinearOpMode {
     //Class Variables
     int variableScopeTest = 0;
 
+
     public void runOpMode() throws InterruptedException {
         //Method Variables
         int variableScopeTest = 5;
 
 
         //#1 Goes here
-
+        printVariableScopeTest();
 
         //#2 Goes here
-
+        telemetry.addData("Method Variable",variableScopeTest);
 
         //#4 Goes here
 
