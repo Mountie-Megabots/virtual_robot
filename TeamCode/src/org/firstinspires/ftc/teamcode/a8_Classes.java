@@ -28,8 +28,12 @@ import org.firstinspires.ftc.teamcode.lessonClasses.Student;
  *    the student's age.
  *
  *    Tip: You can use the Java built-in method java.time.Year.now().getValue()
- *    to get the current year (or you can just use 2023).
+ *    to get the current year (or you can just use 2024).
  * 5. Add the ages of the two students to telemetry.
+ *
+ * do this one next
+ * \/\/\/\/\/\/\/\/\/\/\//\\/\//\\/\/\/\/\//\\/\/
+ *
  * 6. There is a function called isOlderThan() in Student.java that is supposed
  *    to return true if the student is older than another student, but it
  *    currently returns false. Fix it so that it returns the correct value.
@@ -50,9 +54,30 @@ import org.firstinspires.ftc.teamcode.lessonClasses.Student;
 @TeleOp(name = "Lesson 8: Classes")
 public class a8_Classes extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
+        Student Gibson = new Student("Gibson", 1976);
+        Student Max = new Student("Max", -0001);
         Student kevin = new Student("Kevin", 1945);
         kevin.addAssignment(95);
-        telemetry.addData("Kevin's Grade",kevin.getPercentGrade());
+        kevin.addAssignment(10);
+        kevin.addAssignment(118);
+        Gibson.addAssignment(86);
+        Gibson.addAssignment(96);
+        Gibson.addAssignment(100);
+        //dude your slacking!
+        Max.addAssignment(5);
+        Max.addAssignment(0);
+        Max.addAssignment(60);
+        telemetry.addData("Kevin's age",kevin.getAgeInYears());
+        telemetry.addData("Kevin's average percentile",kevin.getPercentGrade());
+        telemetry.addData("Kevin's Grade",kevin.getLetterGrade());
+        telemetry.addLine("");
+        telemetry.addData("Gibson's age",Gibson.getAgeInYears());
+        telemetry.addData("Gibson's average percentile",Gibson.getPercentGrade());
+        telemetry.addData("Gibson's Grade",Gibson.getLetterGrade());
+        telemetry.addLine("");
+        telemetry.addData("Max's age",Max.getAgeInYears());
+        telemetry.addData("Max's average percentile",Max.getPercentGrade());
+        telemetry.addData("Max's Grade",Max.getLetterGrade());
 
 
 
