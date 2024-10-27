@@ -70,7 +70,7 @@ public class Student {
      * @return The student's age in years.
      */
     public int getAgeInYears(){
-        return 0;
+        return 2024 - this.birthYear;
     }
 
     public boolean isOlderThan(Student otherStudent){
