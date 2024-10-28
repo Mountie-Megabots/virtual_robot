@@ -74,7 +74,17 @@ public class Student {
     public boolean isOlderThan(Student otherStudent){
         int stu1 = 2024 - this.birthYear;
         int stu2 = otherStudent.getAgeInYears();
-        return Integer.compare(stu1, stu2);
+
+        switch(Integer.compare(stu1, stu2)){
+            case 1:
+                return true;
+            case 0:
+                return false;
+            default:
+                return false;
+        }
     }
+
+    public int getBirthYear(){ return this.birthYear;}
 
 }

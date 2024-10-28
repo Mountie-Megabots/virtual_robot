@@ -79,14 +79,33 @@ public class a8_Classes extends LinearOpMode {
         telemetry.addData("Max's average percentile",Max.getPercentGrade());
         telemetry.addData("Max's Grade",Max.getLetterGrade());
 
+        telemetry.addLine("");
 
+        if (Gibson.isOlderThan(Max)) {
+            telemetry.addLine("Gibson Is older than Max");
+        } else if(!Gibson.isOlderThan(Max)){
+            telemetry.addLine("Gibson Is younger than Max");
+        }
 
+        telemetry.addLine("");
 
+        if (kevin.isOlderThan(Gibson)) {
+            telemetry.addLine("Kevin Is older than Gibson");
+        } else if(!kevin.isOlderThan(Gibson)){
+            telemetry.addLine("Kevin Is younger than Gibson");
+        }
 
+        telemetry.addLine("");
 
+        telemetry.addData("Gibson's birthyear",Gibson.getBirthYear());
 
+        telemetry.addLine("");
 
+        telemetry.addData("Kevin's birthyear",kevin.getBirthYear());
 
+        telemetry.addLine("");
+
+        telemetry.addData("Max's birthyear",Max.getBirthYear());
 
         telemetry.update();
         waitForStart();
