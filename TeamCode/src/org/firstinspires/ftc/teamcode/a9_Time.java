@@ -28,6 +28,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  *
  *    Inside the while loop, use another telemetry statement to print the value
  *    of getRuntime() - startTime with the caption "getRunTime Offset".
+ *
+ *    Do later\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+ *
  * 3. Time can also be tracked using the ElapsedTime class.
  *
  *    Before waitForStart(), create a new ElapsedTime object with this line of
@@ -78,7 +81,12 @@ public class a9_Time extends LinearOpMode {
 
         waitForStart();
 
+        double startTime = getRuntime();
+
         while (opModeIsActive()) {
+
+            telemetry.addData("gameRuntime()",getRuntime());
+            telemetry.addData("gameRuntime() with offset",getRuntime() - startTime);
 
             telemetry.update();
         }
