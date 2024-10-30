@@ -17,9 +17,13 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  *    In this lesson, we'll be using the ProgrammingBoard robot. It has a motor
  *    and a touch sensor we can use to demonstrate state.
  *
+ *
+ *      ********* here
  *    Add two boolean variables to the program - one called motorOn and one
  *    called lastAButton. Initialize both of them to false.
  *
+ *
+ *    ********tis actually here
  *    In the while loop, use an if statement to check if the A button is pressed
  *    and the lastAButton variable is false. If it is, set motorOn to !motorOn.
  *    Then, use another if statement to check if motorOn is true. If it is, set
@@ -48,6 +52,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  *    pressed, then run the motor in reverse for 2 seconds, and then stop the
  *    motor.
  *
+ *
+ *      fdsgod umgreihgiuyhv
  *    First, create an integer variable called state and initialize it to 0.
  *
  *    These are the actions we want to perform in each state:
@@ -126,12 +132,82 @@ public class a10_State extends LinearOpMode {
         ElapsedTime timer = new ElapsedTime();
 
         //Variables go here
-
+        boolean motoron = false;
+        boolean lastabutton = false;
+        int state = 0;
+        enum autostate{
+            FORWARD,
+            REVERSE,
+            STOP
+        }
+       autostate enumstate = autostate.FORWARD;
 
         waitForStart();
         while (opModeIsActive()) {
             telemetry.addData("touch", digitalChannel.getState());
             telemetry.update();
+
+            if(gamepad1.a){
+                if(lastabutton == false){
+                    motoron = true;
+                }
+            }
+
+            if(motoron == true){
+                motor.setPower(1);
+            } else{
+                motor.setPower(0);
+            }
+
+
+
+            /*if(state == 0){
+                motor.setPower(1);
+                if(!digitalChannel.getState()){
+                    state = 1;
+                    timer.reset();
+                }
+            }else if(state == 1){
+                motor.setPower(-1);
+                if(timer.time() > 2){
+                    state = 2;
+                }
+            } else if(state == 2){
+                motor.setPower(0);
+                if(gamepad1.b){
+                    state = 0;
+                }
+            }*/
+
+            /*switch(state){
+                case 0:
+                    motor.setPower(1);
+                    if(!digitalChannel.getState()){
+                        state = 1;
+                        timer.reset();
+                    }
+                    break;
+                case 1:
+                    motor.setPower(-1);
+                    if(timer.time() > 2){
+                        state = 2;
+                    }
+                    break;
+                case 2:
+                    motor.setPower(0);
+                    if(gamepad1.b){
+                        state = 0;
+                    }
+
+                default:
+                    if(gamepad1.b){
+                        state = 0;
+                    }
+            }*/
+
+
+
+            lastabutton = gamepad1.a;
 
             // Put your code here
 

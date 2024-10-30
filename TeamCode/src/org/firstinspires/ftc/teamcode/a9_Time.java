@@ -19,7 +19,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  *    will notice that the value of getRuntime() does not start at 0. This is
  *    because the robot controller app starts running the OpMode as soon as you
  *    press the init button.
- *
+ nm
  *    We can use a variable to store the time when the OpMode starts, and then
  *    subtract that from getRuntime() to get the time since the OpMode started.
  *
@@ -46,6 +46,9 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  *    Inside the while loop (before your telemetry statements) use an if
  *    statement with the condition gampad1.a to call timer.reset() when the A
  *    button is pressed.
+ *
+ *
+ *
  * 5. The two timers shown are relative to the current OpMode, but sometimes we
  *    need longer term timing. The System.currentTimeMillis() method returns the
  *    current time in milliseconds since January 1, 1970.
@@ -79,14 +82,39 @@ public class a9_Time extends LinearOpMode {
 
     public void runOpMode() throws InterruptedException {
 
+        ElapsedTime timer = new ElapsedTime();
+
         waitForStart();
 
         double startTime = getRuntime();
 
         while (opModeIsActive()) {
 
+            if(gamepad1.a){
+                sleep(5000);
+                timer.reset();
+            }
+
+            if(gamepad1.b){
+                timer.reset();
+                while(timer.time() <= 5){
+                    telemetry.addData("gameRuntime() with offset",getRuntime() - startTime);
+                    telemetry.addData("Elapsed Time",timer.time());
+                    telemetry.update();
+                }
+            }
+
+            telemetry.addData("Elapsed Time",timer.time());
+
             telemetry.addData("gameRuntime()",getRuntime());
+
             telemetry.addData("gameRuntime() with offset",getRuntime() - startTime);
+
+            telemetry.addData("systemmMillis", System.currentTimeMillis());
+
+            telemetry.addData("systemnano",System.nanoTime());
+
+
 
             telemetry.update();
         }
