@@ -109,7 +109,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  *
  *    almost done! just have to finish this:
  *
- *    
+ *
  * 5. Another way to create a state machine is to use an enum, or enumerated type.
  *    An enum is a type of variable that can only be equal to one of a set of
  *    values we define. This lets of give names to the states we want to use.
@@ -132,6 +132,12 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 @TeleOp(name="Lesson_10: State")
 public class a10_State extends LinearOpMode {
+    public enum Autostate{
+        FORWARD,
+        REVERSE,
+        STOP
+    }
+
     public void runOpMode() throws InterruptedException {
         DcMotor motor = hardwareMap.get(DcMotor.class, "motor");
         DigitalChannel digitalChannel = hardwareMap.get(DigitalChannel.class, "touch_sensor");
@@ -141,12 +147,8 @@ public class a10_State extends LinearOpMode {
         boolean motoron = false;
         boolean lastabutton = false;
         int state = 0;
-        enum autostate{
-            FORWARD,
-            REVERSE,
-            STOP
-        }
-       autostate enumstate = autostate.FORWARD;
+
+       Autostate enumstate = Autostate.FORWARD;
 
         waitForStart();
         while (opModeIsActive()) {
@@ -185,31 +187,31 @@ public class a10_State extends LinearOpMode {
                 }
             }*/
 
-            /*switch(state){
-                case 0:
+            switch(enumstate){
+                case FORWARD:
                     motor.setPower(1);
                     if(!digitalChannel.getState()){
-                        state = 1;
+                        enumstate = Autostate.REVERSE;
                         timer.reset();
                     }
                     break;
-                case 1:
+                case REVERSE:
                     motor.setPower(-1);
                     if(timer.time() > 2){
-                        state = 2;
+                        enumstate = Autostate.STOP;
                     }
                     break;
-                case 2:
+                case STOP:
                     motor.setPower(0);
                     if(gamepad1.b){
-                        state = 0;
+                        enumstate = Autostate.FORWARD;
                     }
 
                 default:
                     if(gamepad1.b){
-                        state = 0;
+                        enumstate = Autostate.FORWARD;
                     }
-            }*/
+            }
 
 
 
