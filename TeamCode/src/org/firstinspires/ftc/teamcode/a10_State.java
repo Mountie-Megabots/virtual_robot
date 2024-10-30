@@ -104,6 +104,12 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  *
  *    Rewrite the state machine using a switch statement. You can use the code
  *    above as a template.
+ *
+ *
+ *
+ *    almost done! just have to finish this:
+ *
+ *    
  * 5. Another way to create a state machine is to use an enum, or enumerated type.
  *    An enum is a type of variable that can only be equal to one of a set of
  *    values we define. This lets of give names to the states we want to use.
