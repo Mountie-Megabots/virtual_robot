@@ -49,6 +49,10 @@ public class a0_HelloWorld extends LinearOpMode {
 
     public void runOpMode() throws InterruptedException {
         //Add your telemetry for #1, #2, & #4 here.
+       telemetry.setAutoClear(false);
+        telemetry.addLine("Hello World");
+        telemetry.addLine("Hello World! My name is Sierra");
+        telemetry.update();
 
 
 
@@ -57,7 +61,8 @@ public class a0_HelloWorld extends LinearOpMode {
         waitForStart();
         //#3 goes here
         //This is where our code runs after you hit the Start button.
-
+        telemetry.addLine("The program is running now");
+        telemetry.update();
 
 
         while(opModeIsActive()){
