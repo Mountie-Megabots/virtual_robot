@@ -43,7 +43,9 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class a3_BasicMath extends LinearOpMode {
     //Variables go here
     //#1 goes here.
+    double rightY;
     boolean abutton = false;
+    int aButtonCount = 0;
 
 
     public void runOpMode() throws InterruptedException {
@@ -52,13 +54,15 @@ public class a3_BasicMath extends LinearOpMode {
 
         while(opModeIsActive()){
             //Variable assignment goes here
-
-
+            rightY = -gamepad1.right_stick_y/2;
+            rightY = -gamepad1.right_stick_y*2;
+            telemetry.addData("Right-Y",rightY);
             if(aButtonPressed()){
-                //#5 goes here
+                aButtonCount++;
             }
 
             //Telemetry goes here
+            telemetry.addData("Count",aButtonCount);
 
             telemetry.update();
 
