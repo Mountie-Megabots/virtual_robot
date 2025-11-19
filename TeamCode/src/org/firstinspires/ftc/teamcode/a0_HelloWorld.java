@@ -50,20 +50,27 @@ public class a0_HelloWorld extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         //Add your telemetry for #1, #2, & #4 here.
 
-
-
+        telemetry.addLine("Hello World!");
+        telemetry.addLine("My name is Technolaseraxe021514");
+        telemetry.update();
 
         // This line stops the program here until you hit the start button.
         waitForStart();
         //#3 goes here
         //This is where our code runs after you hit the Start button.
-
+        telemetry.setAutoClear(false);
+        telemetry.addLine("The program is running now");
+        telemetry.update();
 
 
         while(opModeIsActive()){
             //This is our main loop.
             //#5 goes here.
 
+            if(gamepad1.a){
+                  telemetry.clear();
+                  telemetry.update();
+              }
         }
     }
 }
