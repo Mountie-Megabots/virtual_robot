@@ -50,7 +50,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class a1_Variables extends LinearOpMode {
     //Declare variables here
     //#3 goes here
-    String name = "Put your name here";
+    String name = "Sierra";
+    telemetry.update();
     double speed = 1;
     int count = 0;
     boolean teamPropDetected = false;
