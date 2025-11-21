@@ -74,19 +74,50 @@ public class a6_Loops extends LinearOpMode {
 
     public void runOpMode() throws InterruptedException {
         //#1 Goes here
-
+        while(!gamepad1.a) {
+            telemetry.addLine("Press A to continue.");
+            telemetry.update();
+        }
         //#2 Goes here
-
+        while(!gamepad1.b) {
+            telemetry.addLine("Press B to continue.");
+            telemetry.update();
+        }
 
         //#3 goes here
-
-
+        int constant = 0;
+        while (constant < 10) {
+            constant++;
+            sleep(1000);
+            telemetry.addData("Constant", constant);
+            telemetry.update();
+        }
+        telemetry.addData("Constant", constant);
+        telemetry.update();
         //#4 goes here
-
-
+        for (int i = 0; i < 10; i++) {
+            constant++;
+            sleep(1000);
+            telemetry.addData("Constant", constant);
+            telemetry.update();
+        }
+        telemetry.update();
         //#5 goes here
-
+        telemetry.setAutoClear(false);
+        for ( int i = 0; i < 50; i++) {
+            if (i % 3 == 0) {
+                telemetry.addLine("Fizz");
+            } else if (i % 5 == 0) {
+                telemetry.addLine("Buzz");
+            } else if (i % 3 == 0 && i % 5 == 0) {
+                telemetry.addLine("Fizzbuzz");
+            } else if (i % 3 != 0 && i % 5 != 0) {
+                telemetry.addData("", i);
+            }
+            telemetry.update();
+        }
+        telemetry.update();
         waitForStart();
-
+        telemetry.update();
     }
 }

@@ -51,7 +51,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 @TeleOp(name = "Lesson 5: More Math")
 public class a5_MoreMath extends LinearOpMode {
     boolean abutton = false;
-    int aButtonCount = 0;
+    double aButtonCount = 0;
 
 
     public void runOpMode() throws InterruptedException {
@@ -59,18 +59,22 @@ public class a5_MoreMath extends LinearOpMode {
 
         while (opModeIsActive()) {
             if (aButtonPressed()) {
-                aButtonCount += 5;
+                aButtonCount = Math.ceil(Math.random() * 10);
             }
             //You code goes here
-            double AbsRSX = Math.abs(gamepad1.right_stick_y);
-            if (AbsRSX > 0.1) {
+            double AbsRSY = Math.abs(gamepad1.right_stick_y);
+            if (AbsRSY > 0.1) {
                 telemetry.addLine("sigma town!!");
             }
+            double greaterTrigger = Math.max(gamepad1.right_trigger, gamepad1.left_trigger);
+            double signFor5 = Math.copySign(0.5, gamepad1.left_stick_x);
+            telemetry.addData("signFor5",signFor5);
+            telemetry.addData("greaterTrigger", greaterTrigger);
             telemetry.addData("aButtonCount", aButtonCount);
             telemetry.update();
         }
-    }
 
+    }
     boolean aButtonPressed() {
         boolean returnValue = false;
 
