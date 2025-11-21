@@ -124,6 +124,26 @@ public class a4_Conditions extends LinearOpMode {
             }
 
             //All of your code goes below here
+            if(gamepad1.a) {
+                telemetry.addLine("The A button is pressed");
+            } else {
+                telemetry.addLine("The A button is not pressed");
+            }
+
+            if(gamepad1.b) {
+                telemetry.addLine("The B button is pressed");
+            } else {
+                telemetry.addLine ("The B button is not pressed");
+            }
+
+            if(gamepad1.x) {
+                telemetry.addLine ("The X button is pressed");
+            } else {
+                telemetry.addLine 
+            }
+
+
+
 
 
 
