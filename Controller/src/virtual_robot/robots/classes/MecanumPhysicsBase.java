@@ -1,12 +1,18 @@
 package virtual_robot.robots.classes;
 
+import com.qualcomm.hardware.CommonOdometry;
 import com.qualcomm.hardware.bosch.BNO055IMUImpl;
 import com.qualcomm.hardware.bosch.BNO055IMUNew;
+import com.qualcomm.hardware.digitalchickenlabs.OctoQuadImpl;
+import com.qualcomm.hardware.gobilda.GoBildaPinpointDriverInternal;
+import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
+import com.qualcomm.hardware.sparkfun.SparkFunOTOSInternal;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorExImpl;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.configuration.MotorType;
+import javafx.scene.input.MouseEvent;
 import org.dyn4j.dynamics.Body;
 import org.dyn4j.geometry.MassType;
 import org.dyn4j.geometry.Vector2;
@@ -14,9 +20,13 @@ import org.firstinspires.ftc.robotcore.external.matrices.GeneralMatrixF;
 import org.firstinspires.ftc.robotcore.external.matrices.MatrixF;
 import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.Pose2D;
+import org.firstinspires.ftc.robotcore.external.navigation.UnnormalizedAngleUnit;
 import virtual_robot.config.Config;
 import virtual_robot.controller.*;
 import virtual_robot.util.AngleUtils;
+import virtual_robot.util.Vel2D;
 
 /**
  * For internal use only. Base class for a physics-based robot with four mecanum wheels, color sensor,
@@ -28,8 +38,12 @@ public abstract class MecanumPhysicsBase extends VirtualBot {
     private DcMotorExImpl[] motors = null;
     private BNO055IMUImpl imu = null;
     BNO055IMUNew imuNew = null;
+    private CommonOdometry odo = CommonOdometry.getInstance();
+    private SparkFunOTOSInternal sparkFunOTOSInternal = null;
+    private GoBildaPinpointDriverInternal goBildaPinpointDriverInternal = null;
     private VirtualRobotController.ColorSensorImpl colorSensor = null;
     private VirtualRobotController.DistanceSensorImpl[] distanceSensors = null;
+    protected OctoQuadImpl octoQuad = null;
 
     /*
      * Gear ratio for any external gears added in drive train. For now, this is just 1.0. Could easily
@@ -61,7 +75,7 @@ public abstract class MecanumPhysicsBase extends VirtualBot {
      */
     public MecanumPhysicsBase() {
         super();
-        MOTOR_TYPE = MotorType.Neverest40;
+        MOTOR_TYPE = Config.DEFAULT_DRIVE_MOTOR_TYPE;
     }
 
     public MecanumPhysicsBase(MotorType driveMotorType){
@@ -87,6 +101,15 @@ public abstract class MecanumPhysicsBase extends VirtualBot {
         imu = hardwareMap.get(BNO055IMUImpl.class, "imu");
         imuNew = hardwareMap.get(BNO055IMUNew.class, "imu");
         colorSensor = (VirtualRobotController.ColorSensorImpl) hardwareMap.colorSensor.get("color_sensor");
+
+        sparkFunOTOSInternal = hardwareMap.get(SparkFunOTOSInternal.class, "sensor_otos");
+        goBildaPinpointDriverInternal = hardwareMap.get(GoBildaPinpointDriverInternal.class, "pinpoint");
+
+        octoQuad = hardwareMap.get(OctoQuadImpl.class, "octoquad");
+        for (int i=0; i<4; i++){
+            octoQuad.setEncoder(i, motors[i]);
+        }
+
         wheelCircumference = Math.PI * botWidth / 4.5;
         interWheelWidth = botWidth * 8.0 / 9.0;
         interWheelLength = botWidth * 7.0 / 9.0;
@@ -136,12 +159,17 @@ public abstract class MecanumPhysicsBase extends VirtualBot {
     protected void createHardwareMap() {
         hardwareMap = new HardwareMap();
         String[] motorNames = new String[]{"back_left_motor", "front_left_motor", "front_right_motor", "back_right_motor"};
-        for (String name : motorNames) hardwareMap.put(name, new DcMotorExImpl(MOTOR_TYPE));
+        for (int i=0; i<4; i++){
+            hardwareMap.put(motorNames[i], new DcMotorExImpl(MOTOR_TYPE, motorController0, i));
+        }
         String[] distNames = new String[]{"front_distance", "left_distance", "back_distance", "right_distance"};
         for (String name : distNames) hardwareMap.put(name, controller.new DistanceSensorImpl());
         hardwareMap.put("imu", new BNO055IMUImpl(this, 10));
         hardwareMap.put("imu", new BNO055IMUNew(this, 10));
         hardwareMap.put("color_sensor", controller.new ColorSensorImpl());
+        hardwareMap.put("sensor_otos", new SparkFunOTOSInternal());
+        hardwareMap.put("pinpoint", new GoBildaPinpointDriverInternal());
+        hardwareMap.put("octoquad", new OctoQuadImpl());
     }
 
     /**
@@ -159,9 +187,17 @@ public abstract class MecanumPhysicsBase extends VirtualBot {
         /*
          * Get updated position and heading from the dyn4j body (chassisBody)
          */
-        x = chassisBody.getTransform().getTranslationX() * VirtualField.PIXELS_PER_METER;
-        y = chassisBody.getTransform().getTranslationY() * VirtualField.PIXELS_PER_METER;
+        double xMeters = chassisBody.getTransform().getTranslationX();
+        double yMeters = chassisBody.getTransform().getTranslationY();
+        x = xMeters * VirtualField.PIXELS_PER_METER;
+        y = yMeters * VirtualField.PIXELS_PER_METER;
         headingRadians = chassisBody.getTransform().getRotationAngle();
+
+        /*
+         * Get updated velocities (for use by the SparkFunOTOS sensor)
+         */
+        Vector2 velocityMetersPerSec = chassisBody.getLinearVelocity();
+        double angularVelocityRadiansPerSec = chassisBody.getAngularVelocity();
 
         // Compute new wheel speeds in pixel units per second
 
@@ -187,6 +223,7 @@ public abstract class MecanumPhysicsBase extends VirtualBot {
             }
         }
 
+
         robotTargetSpd[0] /= VirtualField.PIXELS_PER_METER;
         robotTargetSpd[1] /= VirtualField.PIXELS_PER_METER;
 
@@ -207,6 +244,7 @@ public abstract class MecanumPhysicsBase extends VirtualBot {
                 robotTargetSpd[0]*sinFinal + robotTargetSpd[1]*cosFinal
         );
 
+
         /*
          * Compute the force and torque that would be required to achieve the target changes in robot velocity and
          * angular speed (F = ma,  tau = I*alpha)
@@ -226,6 +264,7 @@ public abstract class MecanumPhysicsBase extends VirtualBot {
         // VectorF containing total force and torque required on bot to achieve the tentative position change,
         // in robot coordinate system
         VectorF totalForce = new VectorF(fXR, fYR, (float)torque, 0);
+
 
         // Required friction force from floor to achieve the tentative position change. For now, this will
         // be the same as totalForce, but may want to add offsets to collision forces
@@ -248,7 +287,7 @@ public abstract class MecanumPhysicsBase extends VirtualBot {
         }
 
         //Based on the adjusted forces at each wheel, determine net frictional force and torque on the bot,
-        //Force is in ROBOT COORDINATE system
+        //Force is in ROBOT COORDINATE system (This can also be used in updating Odometry sensors)
 
         frictionForces = M_ForceWheelToRobot.multiplied(wheel_X_Forces);
 
@@ -269,11 +308,27 @@ public abstract class MecanumPhysicsBase extends VirtualBot {
         chassisBody.applyForce(force);
         chassisBody.applyTorque(torque);
 
+
+        /*
+         * Compute linear and angular acceleration for use by SparkFunOTOS (World Coordinates)
+         */
+        Vector2 accelMetersPerSecSqr = force.quotient(chassisBody.getMass().getMass());
+        double angularAccelRadiansPerSecSqr = torque / chassisBody.getMass().getInertia();
+
         /*
          * Update the sensors
          */
         imu.updateHeadingRadians(headingRadians);
         imuNew.updateHeadingRadians(headingRadians);
+        odo.update(
+                new Pose2D(DistanceUnit.METER, xMeters, yMeters, AngleUnit.RADIANS, headingRadians),
+                new Vel2D(DistanceUnit.METER, velocityMetersPerSec.x, velocityMetersPerSec.y, UnnormalizedAngleUnit.RADIANS, angularVelocityRadiansPerSec),
+                new Vel2D(DistanceUnit.METER, accelMetersPerSecSqr.x, accelMetersPerSecSqr.y, UnnormalizedAngleUnit.RADIANS, angularAccelRadiansPerSecSqr)
+        );
+        sparkFunOTOSInternal.update();
+
+
+        // It isn't necessary to update the Pinpoint here; it is the responsibility of the user to update it.
 
         colorSensor.updateColor(x, y);
 
@@ -297,6 +352,12 @@ public abstract class MecanumPhysicsBase extends VirtualBot {
     public void powerDownAndReset() {
         for (int i = 0; i < 4; i++) motors[i].stopAndReset();
         imu.close();
+        odo.update(
+                new Pose2D(DistanceUnit.METER, x/VirtualField.PIXELS_PER_METER, y/VirtualField.PIXELS_PER_METER, AngleUnit.RADIANS, headingRadians),
+                new Vel2D(DistanceUnit.METER, 0, 0, UnnormalizedAngleUnit.RADIANS, 0), new Vel2D(DistanceUnit.METER, 0, 0, UnnormalizedAngleUnit.RADIANS, 0)
+        );
+        sparkFunOTOSInternal.update();
+        goBildaPinpointDriverInternal.update();
         chassisBody.setAngularVelocity(0);
         chassisBody.setLinearVelocity(0,0);
     }
@@ -322,6 +383,19 @@ public abstract class MecanumPhysicsBase extends VirtualBot {
         chassisFixture.setFilter(Filters.CHASSIS_FILTER);
         chassisBody.setMass(MassType.NORMAL);
         world.addBody(chassisBody);
+    }
+
+    @Override
+    public synchronized void positionWithMouseClick(MouseEvent arg) {
+        super.positionWithMouseClick(arg);
+        odo.update(
+                new Pose2D(DistanceUnit.METER, x/VirtualField.PIXELS_PER_METER, y/VirtualField.PIXELS_PER_METER, AngleUnit.RADIANS, headingRadians),
+                new Vel2D(DistanceUnit.METER, 0, 0, UnnormalizedAngleUnit.RADIANS, 0), new Vel2D(DistanceUnit.METER, 0, 0, UnnormalizedAngleUnit.RADIANS, 0)
+        );
+        odo.setPosition(new Pose2D(DistanceUnit.METER, 0, 0, AngleUnit.RADIANS, 0));
+        sparkFunOTOSInternal.update();
+        goBildaPinpointDriverInternal.internalUpdate(false, false);
+        goBildaPinpointDriverInternal.resetEncoders();
     }
 
 }

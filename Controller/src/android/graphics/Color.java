@@ -5,6 +5,10 @@ package android.graphics;
  * Provides an RGBToHSV method with signature identical to that found in the android.graphics.Color class
  */
 public class Color {
+    public static int BLUE = argb(0,0,0,255);
+    public static int GREEN = argb(0, 0, 255, 0);
+
+    public static int RED = argb(0, 255, 0, 0);
 
     /**
      * Given inputs of red, green, and blue channels, writes the hue, sat, and value to the hsv output array
@@ -18,6 +22,15 @@ public class Color {
         hsv[0] = (float)color.getHue();
         hsv[1] = (float)color.getSaturation();
         hsv[2] = (float)color.getBrightness();
+    }
+
+    /**
+     * From vibeacademy fork of Beta8397 virtual_robot, under Apache v2 license.
+     * @param color
+     * @param hsv
+     */
+    public static void colorToHSV(int color, float[] hsv){
+        RGBToHSV(red(color), green(color), blue(color), hsv);
     }
 
     public static int HSVToColor(float[] hsv){

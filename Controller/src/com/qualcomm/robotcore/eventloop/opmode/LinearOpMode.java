@@ -42,9 +42,10 @@ public abstract class LinearOpMode extends OpMode {
      */
     public final void idle() {
         // Otherwise, yield back our thread scheduling quantum and give other threads at
-        // our priority level a chance to run
+        // our priority level a chance to run. Because physics cycle only runs every 20ms,
+        // will add a 20 ms delay here.
         try{
-            Thread.sleep(0,1);
+            Thread.sleep(20,0);
         } catch(InterruptedException e){
             Thread.currentThread().interrupt();
         }
@@ -65,6 +66,18 @@ public abstract class LinearOpMode extends OpMode {
             Thread.currentThread().interrupt();
         }
         return;
+    }
+
+    /**
+     * Determine whether this OpMode is still in the Init phase (indicating that the play button has
+     * not been pressed and the OpMode has not been stopped).
+     * <p>
+     * Can be used to break out of an Init loop when false is returned.
+     *
+     * @return Whether the OpMode is currently in the Init phase.
+     */
+    public final boolean opModeInInit() {
+        return !isStarted() && !isStopRequested();
     }
 
     /**

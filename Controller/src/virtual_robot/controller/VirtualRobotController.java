@@ -1,5 +1,6 @@
 package virtual_robot.controller;
 
+import com.qualcomm.hardware.CommonOdometry;
 import com.qualcomm.robotcore.eventloop.opmode.*;
 import com.qualcomm.robotcore.hardware.*;
 import com.qualcomm.robotcore.util.Range;
@@ -19,6 +20,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Polyline;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Callback;
@@ -76,6 +78,8 @@ public class VirtualRobotController {
     @FXML private CheckBox cbxShowPath;
     @FXML private CheckBox checkBoxAutoHuman;
     @FXML private Label lblRunTime;
+    @FXML private HBox hbxGamePads;
+    @FXML private VBox vbxRight;
 
     // dyn4j world
     World<Body> world = new World<>();
@@ -110,7 +114,6 @@ public class VirtualRobotController {
     //Virtual Robot Control Engine
     ScheduledExecutorService executorService = null;
     public static final double TIME_INTERVAL_MILLISECONDS = 20;
-
 
     //Random Number Generator
     private final Random random = new Random();
@@ -181,8 +184,9 @@ public class VirtualRobotController {
         sldMotorInertia.valueProperty().addListener(sliderChangeListener);
 
         if (Config.USE_VIRTUAL_GAMEPAD){
-            checkBoxGamePad1.setVisible(false);
-            checkBoxGamePad2.setVisible(false);
+            vbxRight.getChildren().remove(hbxGamePads);
+//            checkBoxGamePad1.setVisible(false);
+//            checkBoxGamePad2.setVisible(false);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("virtual_gamepad.fxml"));
             try{
                 HBox hbox = (HBox)loader.load();
@@ -304,7 +308,8 @@ public class VirtualRobotController {
                 validConfigClasses.add(c);
         }
         cbxConfig.setItems(validConfigClasses);
-        cbxConfig.setValue(MecanumBot.class);
+//        cbxConfig.setValue(MecanumBot.class);
+        cbxConfig.setValue(Config.DEFAULT_BOT);
 
         cbxConfig.setCellFactory(new Callback<ListView<Class<?>>, ListCell<Class<?>>>() {
             @Override
@@ -389,8 +394,8 @@ public class VirtualRobotController {
     }
 
     private void setupCbxOpModes(){
-//        Reflections reflections = new Reflections("");
-        Reflections reflections = new Reflections("org.firstinspires.ftc.teamcode");
+        Reflections reflections = new Reflections("");
+//        Reflections reflections = new Reflections("org.firstinspires.ftc.teamcode");
         Set<Class<?>> opModes = new HashSet<>();
         opModes.addAll(reflections.getTypesAnnotatedWith(TeleOp.class));
         opModes.addAll(reflections.getTypesAnnotatedWith(Autonomous.class));//Lists of OpMode classes and OpMode Names
@@ -464,6 +469,7 @@ public class VirtualRobotController {
             bot.removeFromWorld();
             bot.removeFromDisplay(fieldPane);
         }
+        CommonOdometry.internalReset();
         bot = getVirtualBotInstance(cbxConfig.getValue());
         if (bot == null) System.out.println("Unable to get VirtualBot Object");
         hardwareMap = bot.getHardwareMap();
@@ -597,6 +603,13 @@ public class VirtualRobotController {
             long opModeStartNanos = System.nanoTime();
 
             while (opModeStarted && !Thread.currentThread().isInterrupted()) {
+
+                try {
+                    Thread.sleep(20, 0);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+
                 // Update the run time display
                 final long opModeRunNanos = System.nanoTime() - opModeStartNanos;
                 Platform.runLater(()->lblRunTime.setText(String.format("%.2f", opModeRunNanos/1000000000.0)));
